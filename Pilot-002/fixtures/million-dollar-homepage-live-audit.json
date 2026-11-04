@@ -1,0 +1,43 @@
+{
+  "observed_at": "2026-11-03",
+  "url": "https://milliondollarhomepage.com/",
+  "document_title": "The Million Dollar Homepage - Own a piece of internet history!",
+  "evidence_method": "Direct parse of the HTML response returned by the live page during this field study.",
+  "observed_document": {
+    "html_bytes": 59257,
+    "area_elements": 251,
+    "area_elements_missing_alt": 251,
+    "area_elements_with_href": 251,
+    "area_elements_with_title": 251,
+    "area_elements_rewritten_to_wayback": 80,
+    "area_elements_preserving_original_url_attribute": 80,
+    "ordinary_anchor_elements": 10,
+    "image_elements": 3,
+    "image_map_elements": 1,
+    "script_elements": 4,
+    "frame_elements": 1,
+    "form_elements": 1
+  },
+  "page_source_comment": {
+    "mode": "broken_only",
+    "description": "Only broken links have been replaced with Wayback Machine snapshots.",
+    "claimed_links_replaced": 1164,
+    "generated_at": "2026-01-23 13:10:45",
+    "verification_status": "The page comment claims 1,164 replacements. The live homepage parse directly verified 80 rewritten image-map areas; it did not independently establish 1,164 rewritten links on the homepage."
+  },
+  "interpretation": {
+    "established": [
+      "The inspected response contains 251 image-map area elements.",
+      "Every inspected area element lacks an alt attribute.",
+      "Every inspected area element has an href and title attribute.",
+      "80 inspected area elements have class wayback-replaced and preserve data-original-url."
+    ],
+    "unknown": [
+      "Whether the title values are announced consistently as accessible names by current assistive technologies.",
+      "Whether the current desktop and mobile image-map interaction is operable with keyboard and screen readers.",
+      "Whether all outbound snapshot targets load correctly.",
+      "Whether the page-source comment's 1,164-link count refers to this page, a wider crawl, or a generated site bundle."
+    ]
+  },
+  "scope_note": "Structural evidence only; this is not a WCAG conformance audit or an evaluation of all external destinations."
+}
