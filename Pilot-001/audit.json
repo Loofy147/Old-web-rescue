@@ -1,0 +1,144 @@
+{
+  "run_id": "OWRL-P001",
+  "run_date": "2026-11-03",
+  "title": "Old Web Rescue Lab — Pilot 001",
+  "method": "Task-based live and archived website inspection with source markup checks, selected viewport captures, and an independent modernization prototype.",
+  "sites": [
+    {
+      "name": "CERN First World Wide Web Project Page",
+      "url": "https://info.cern.ch/hypertext/WWW/TheProject.html",
+      "task_status": "completed_partial",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "Page links to FAQ, information directory, software products, technical documentation, history and getting-code resources."},
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "Text-first page reflowed at 390px without obvious horizontal overflow."},
+        {"claim": "ESTABLISHED", "detail": "Nu HTML Checker reported 10 errors and 26 warnings."},
+        {"claim": "UNKNOWN", "detail": "Screen-reader behavior and keyboard order were not audited."}
+      ]
+    },
+    {
+      "name": "Space Jam 1996",
+      "url": "https://www.spacejam.com/1996/cmp/junior/concentration.html",
+      "task_status": "partially_blocked",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "Concentration page requires Shockwave and embeds concentration.dcr."},
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "Current capture showed an empty game area."},
+        {"claim": "ESTABLISHED", "detail": "Nu HTML Checker reported 18 errors and 24 warnings for games.html, including two missing image alt attributes."}
+      ],
+      "prototype": "Independent accessible offline memory game in Pilot-001/memory-reboot.html"
+    },
+    {
+      "name": "Internet Archive Wayback Machine",
+      "url": "https://web.archive.org/web/*/http://info.cern.ch/",
+      "task_status": "completed_with_historical_qualification",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "3,651 captures shown between 1997-12-10 and 2026-10-27."},
+        {"claim": "ESTABLISHED", "detail": "The inspected earliest candidate snapshot is a CERN HTTP daemon error page, not the original homepage."}
+      ]
+    },
+    {
+      "name": "Project Gutenberg",
+      "url": "https://www.gutenberg.org/ebooks/1342",
+      "task_status": "completed",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "Book record supports online reading and several download formats."},
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "Reader and chapter navigation loaded in mobile capture."},
+        {"claim": "UNKNOWN", "detail": "Screen-reader behavior was not tested."}
+      ]
+    },
+    {
+      "name": "W3C",
+      "url": "https://www.w3.org/",
+      "task_status": "completed",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "WCAG 2.2 is a W3C Recommendation dated 2024-12-12."},
+        {"claim": "ESTABLISHED", "detail": "Nu HTML Checker reported zero errors and one warning for the homepage."}
+      ]
+    },
+    {
+      "name": "Craigslist",
+      "url": "https://www.craigslist.org/search/area/atlanta?cat=sya",
+      "task_status": "completed_partial",
+      "findings": [
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "Search returned 329 results during the inspection and preserved mobile search controls."},
+        {"claim": "ESTABLISHED", "detail": "Nu HTML Checker reported no errors and one missing-html-lang warning."},
+        {"claim": "UNKNOWN", "detail": "Seller contact, posting and payment flows were not completed."}
+      ]
+    },
+    {
+      "name": "Google",
+      "url": "https://www.google.com/",
+      "task_status": "completed_partial",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "Mobile homepage exposed text search, camera, microphone and AI Mode controls."},
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "A site-specific test query produced a captured result page whose surfaced results did not clearly match the query."},
+        {"claim": "UNKNOWN", "detail": "One run cannot establish search relevance or ranking quality."}
+      ]
+    },
+    {
+      "name": "Slashdot",
+      "url": "https://slashdot.org/",
+      "task_status": "completed_partial",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "The inspected story contained timestamps, topic navigation, outbound sources and article text."},
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "Promotional overlays and fixed advertising obscured part of the captured mobile viewport."},
+        {"claim": "UNKNOWN", "detail": "Comment submission and moderation workflows were not tested."}
+      ]
+    },
+    {
+      "name": "Zombo.com",
+      "url": "https://zombo.com/",
+      "task_status": "current_and_archived_state_compared",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "The current homepage states that new management acquired the domain and current content is new."},
+        {"claim": "ESTABLISHED", "detail": "Wayback calendar reported 7,241 captures between 1999-11-28 and 2026-11-01."}
+      ]
+    },
+    {
+      "name": "Textfiles.com",
+      "url": "https://textfiles.com/",
+      "task_status": "archived_snapshots_inspected",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "Archived BBS and computer directories expose catalogues of files with descriptions and file sizes."},
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "At 390px, long prose reflowed but directory tables became cramped."},
+        {"claim": "ESTABLISHED", "detail": "A representative text file replay displayed trailing SUB control characters as visible noise."}
+      ]
+    },
+    {
+      "name": "GeoCities personal pages",
+      "url": "https://arquivo.pt/searchGeocities",
+      "task_status": "search_and_three_replays_inspected",
+      "findings": [
+        {"claim": "EXPERIMENTALLY_SUPPORTED", "detail": "Diary page reflowed at 390px; computer-tutorial page clipped; dog-gallery table compressed descriptions."},
+        {"claim": "UNKNOWN", "detail": "Full site and dependency completeness were not tested."}
+      ]
+    },
+    {
+      "name": "Million Dollar Homepage",
+      "url": "https://milliondollarhomepage.com/",
+      "task_status": "direct_markup_inspection",
+      "findings": [
+        {"claim": "ESTABLISHED", "detail": "The inspected response contained 251 image-map area elements, all without alt attributes."},
+        {"claim": "ESTABLISHED", "detail": "80 area elements were rewritten to Wayback targets and preserved data-original-url."},
+        {"claim": "UNKNOWN", "detail": "A source comment claims 1,164 replacements; this broader count was not independently verified."},
+        {"claim": "UNKNOWN", "detail": "Keyboard operation and screen-reader naming were not tested."}
+      ]
+    }
+  ],
+  "prototype": {
+    "name": "Memory Reboot",
+    "path": "Pilot-001/memory-reboot.html",
+    "scope": "Independent implementation of a generic memory matching interaction; no Space Jam assets, characters, music, source code or branding.",
+    "verification": {
+      "node_tests": "6/6 PASS",
+      "browser_smoke": "PASS",
+      "viewports": [320, 390, 1440],
+      "page_errors": 0
+    }
+  },
+  "limitations": [
+    "No human participants or assistive-technology users were involved.",
+    "No formal screen-reader walkthrough was completed.",
+    "No comprehensive security or link-health audit was conducted.",
+    "Archived replay failures may reflect archive capture gaps rather than original-site defects."
+  ]
+}
