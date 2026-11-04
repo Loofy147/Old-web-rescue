@@ -12,27 +12,33 @@
 
 **Problem:** The Million Dollar Homepage uses an image map with hundreds of clickable regions. In the inspected live HTML, 251 `<area>` elements had no `alt` attribute. The homepage is visually navigable but its link inventory is not adequately represented as text alternatives.
 
-**Goal:** Build an independent, rights-conscious companion interface for exploring pixel-map destinations as a searchable, keyboard-accessible list and visual grid.
+**Goal:** Build an independent, rights-conscious companion interface for exploring pixel-map destinations as a searchable, keyboard-accessible list and schematic coordinate view.
 
-### Scope
+### Implemented in v0.1 prototype
 
-- Parse a user-supplied/local image-map HTML export; do not crawl the live website automatically.
-- Extract each region's destination, title, original URL (when supplied), shape and coordinates.
-- Provide searchable text index and keyboard-operable selection.
-- Expose region links as semantic anchors with meaningful labels derived from available title/metadata; clearly flag entries without sufficient label data.
-- Show when a destination is a current URL versus an archive replacement.
-- Preserve evidence provenance and original target strings.
-- Include a static fixture modelled on a generic image map, not a mirrored commercial site.
+- [x] Parse pasted or local HTML without executing its scripts or fetching referenced assets.
+- [x] Extract map relationships, area shape/coordinates, source attributes and image dimensions.
+- [x] Preserve every area, including orphan areas outside a map, with explicit diagnostics.
+- [x] Distinguish alt/aria-label source text from title-only review candidates and missing labels.
+- [x] Resolve relative HTTP(S) destinations only against an investigator-supplied base URL.
+- [x] Detect Wayback replacements and preserve archive URL plus original destination.
+- [x] Detect duplicate destinations and malformed geometry.
+- [x] Provide searchable inventory and keyboard-operable region selection.
+- [x] Provide schematic coordinate visualization without fetching the source image.
+- [x] Export complete JSON and filtered CSV records.
+- [x] Add parser regression tests and a browser smoke covering keyboard selection, local file import, filtering, export and responsive layouts.
+- [x] Add Pilot 003 parser tests to GitHub Actions.
 
-### Acceptance criteria
+### Open verification gates
 
-- Every parsed region appears in the text inventory.
-- Every interactive item is reachable by keyboard.
-- No interactive item is unnamed; missing label metadata is surfaced as an explicit data-quality error, not hidden behind a fabricated label.
-- Search and selection work without a pointer.
-- 320, 390 and desktop layouts have no horizontal overflow.
-- Unit tests cover malformed areas, URL normalization, duplicate destinations, missing labels and empty maps.
-- No copyrighted site artwork or advertising assets are bundled.
+- [ ] Manual screen-reader review with at least one desktop and one mobile assistive-technology combination.
+- [ ] Human review of source labels before treating any descriptions as meaningful alternatives.
+- [ ] Test against a broader corpus of real-world HTML5 and HTML 4 image maps.
+- [ ] Evaluate a standards-compliant parsing implementation if malformed nested structures materially reduce extraction accuracy.
+
+### Acceptance and limits
+
+Every extracted area must appear in the inventory; unassociated or malformed regions are surfaced with warnings. The tool does not manufacture descriptive labels. Title values are candidates for human review, not proof of accessible names. The geometry panel is schematic, not a screenshot. The parser is a limited tokenizer, not a full HTML5 parser. No WCAG conformance claim is made.
 
 ### Not in scope
 
