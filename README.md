@@ -57,8 +57,11 @@ python legacy_html_audit.py saved-page.html --json
 | Pilot 002 Python tests | 23/23 PASS |
 | Python compilation | PASS |
 | HTML fixture audit output | Valid JSON |
+| GitHub Actions | PASS — Node, Python 3.10 and 3.12, compilation and fixture validation |
 
-GitHub Actions runs Node tests and Python tests/compilation on pushes and pull requests to `main`. The Playwright browser smoke remains an optional local check.
+Latest verified CI run: [GitHub Actions run #23](https://github.com/Loofy147/Old-web-rescue/actions/runs/41821030322).
+
+The Playwright browser smoke remains an optional local check; it is not currently a CI job.
 
 ## Research discipline
 
@@ -66,7 +69,7 @@ Claims use explicit evidence labels: `ESTABLISHED`, `EXPERIMENTALLY_SUPPORTED`, 
 
 The HTML auditor is structural triage, **not** a WCAG conformance checker. Screenshots, HTML validation and automated tools cannot establish complete accessibility. Keyboard, screen-reader, contrast and human evaluation remain separate.
 
-The Arquivo.pt CLI tests use controlled responses. Direct DNS/network access from the original build container was unavailable, so no live CLI request is claimed from that environment; the API endpoints were independently exercised during research. Capture timestamps are archive dates, not proof of original publication dates.
+The Arquivo.pt CLI tests use controlled responses. Direct DNS/network access from the original build container was unavailable, so no live CLI request is claimed as a locally executed test; the API endpoints were independently exercised during research. Capture timestamps are archive dates, not proof of original publication dates.
 
 ## Preservation and rights
 
@@ -74,6 +77,6 @@ Archived content may contain personal information, copyrighted material and untr
 
 ## Next
 
-Pilot 003 is planned as **Pixel Atlas**: an accessible, searchable companion interface for image-map-heavy pixel directories. Its acceptance criteria and scope are in `ROADMAP.md`.
+Pilot 003 is **Pixel Atlas**: an accessible, searchable companion interface for image-map-heavy pixel directories. Its scope and acceptance criteria are tracked in [GitHub issue #1](https://github.com/Loofy147/Old-web-rescue/issues/1) and `ROADMAP.md`.
 
 See `RESEARCH_PROTOCOL.md`, `IP_AND_PRESERVATION.md`, `CONTRIBUTING.md`, and `CHANGELOG.md` for the operating rules and repository history.
