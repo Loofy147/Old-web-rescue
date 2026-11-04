@@ -32,6 +32,9 @@ Run the applicable checks:
 (cd Pilot-001 && python browser-smoke.py)  # requires Playwright + Chromium
 (cd Pilot-002 && python -m unittest discover -s tests -v)
 (cd Pilot-002 && python -m py_compile geocities_explorer.py legacy_html_audit.py)
+(cd Pilot-003 && node --test tests/pixel-atlas-core.test.mjs)
+(cd Pilot-004 && python -m unittest discover -s tests -v)
+(cd Pilot-004 && python rescue_benchmark.py validate fixtures/synthetic-benchmark.json)
 ```
 
 Update the relevant `README`, evidence notes, source register, run results and `CHANGELOG.md`. Never claim checks that were not executed.

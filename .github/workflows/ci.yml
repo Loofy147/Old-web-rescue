@@ -61,3 +61,31 @@ jobs:
         run: |
           node --check pixel-atlas-core.mjs
           node --check app.mjs
+
+  pilot-004:
+    name: Pilot 004 — Website Rescue Benchmark
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run benchmark unit tests
+        working-directory: Pilot-004
+        run: python -m unittest discover -s tests -v
+      - name: Compile benchmark tool
+        working-directory: Pilot-004
+        run: python -m py_compile rescue_benchmark.py
+      - name: Validate synthetic benchmark fixture
+        working-directory: Pilot-004
+        run: python rescue_benchmark.py validate fixtures/synthetic-benchmark.json
+      - name: Validate JSON and Markdown report outputs
+        working-directory: Pilot-004
+        run: |
+          python rescue_benchmark.py report fixtures/synthetic-benchmark.json --format json > report.json
+          python -m json.tool report.json > /dev/null
+          python rescue_benchmark.py report fixtures/synthetic-benchmark.json > report.md

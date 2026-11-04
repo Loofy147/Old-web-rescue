@@ -47,8 +47,39 @@ Every extracted area must appear in the inventory; unassociated or malformed reg
 - Automatic crawling or link checking of extracted destinations.
 - Claims of WCAG conformance without full human evaluation.
 
+## Pilot 004 — Website Rescue Benchmark
+
+**Problem:** Individual pilots can identify defects, but comparisons between original pages and independent prototypes need consistent task definitions, controlled environments and inspectable evidence.
+
+**Goal:** Provide a repeatable, task-level benchmark format and deterministic analyzer without pretending that a website can be reduced to one quality score.
+
+### Implemented
+
+- [x] Standard-library CLI for validating benchmark JSON and producing Markdown/JSON reports.
+- [x] Exactly one baseline and one or more candidate variants.
+- [x] Explicit scenarios and uniquely identified success criteria.
+- [x] Criterion-level `met` / `not_met` / `unknown` outcomes with evidence for every run.
+- [x] Consistency checks between criterion results and declared task outcome.
+- [x] Browser, viewport, input mode and assistive-technology context required for every run.
+- [x] Separate success, partial, blocked, failed and not-attempted outcomes.
+- [x] Exclude not-attempted records from completion-rate denominators; disallow durations/steps for them.
+- [x] Compare only identical scenario IDs and complete environment records.
+- [x] Keep completion rates and successful-run duration/step medians scoped to matched task conditions.
+- [x] Preserve evidence category, severity, method, summary and reproduction details.
+- [x] Synthetic fixture, deterministic tests, CLI validation and Markdown/JSON output.
+
+### Open verification gates
+
+- [ ] Run a real page/task benchmark with documented expert evaluators or participants.
+- [ ] Confirm environment fields against the actual browser and assistive-technology matrix used in the study.
+- [ ] Review participant consent, privacy and evidence-retention practices before collecting participant data.
+- [ ] Execute the Python 3.10 and 3.12 CI matrix for this pilot.
+
+### Limits
+
+The utility validates record structure and calculation rules, not the truth or quality of observations. Matched environments do not imply paired participants or statistical significance. Finding counts are occurrences, not deduplicated defects. No composite website score, WCAG certification or whole-domain conclusion is produced.
+
 ## Subsequent opportunities
 
 1. **Textfiles Reader:** modern directory/search layer for preserved text archives, with byte-control cleanup shown as a separate derived view while preserving original bytes.
 2. **GeoCities Gallery:** explore captured personal pages with capture dates, preservation status, attribution and clear original/archive URL distinction.
-3. **Website Rescue Benchmark:** page-scoped task scenarios that compare baseline and modernization prototypes with explicit success criteria.

@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0",
+  "benchmark_id": "synthetic-library-contact-flow-v1",
+  "site": {
+    "label": "Synthetic public library site",
+    "canonical_url": "https://library.example.test/",
+    "capture_status": "local_fixture"
+  },
+  "variants": [
+    {
+      "id": "original",
+      "label": "Original experience",
+      "role": "baseline"
+    },
+    {
+      "id": "modernized",
+      "label": "Independent prototype",
+      "role": "candidate"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "find-contact",
+      "objective": "Find the library's public contact details from the home page.",
+      "success_criteria": [
+        {
+          "id": "contact_page",
+          "description": "Reach the contact information page."
+        },
+        {
+          "id": "contact_method",
+          "description": "Identify one valid public contact method."
+        }
+      ]
+    },
+    {
+      "id": "find-hours",
+      "objective": "Find today's opening hours from the home page.",
+      "success_criteria": [
+        {
+          "id": "hours_location",
+          "description": "Locate the opening-hours information."
+        },
+        {
+          "id": "hours_correct",
+          "description": "Identify the correct opening time for the requested day."
+        }
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "id": "original-contact-keyboard-01",
+      "scenario_id": "find-contact",
+      "variant_id": "original",
+      "environment": {
+        "browser": "Chromium 130",
+        "viewport": "1280x800",
+        "input_mode": "keyboard",
+        "assistive_technology": "none"
+      },
+      "outcome": "blocked",
+      "duration_seconds": 95,
+      "steps": 11,
+      "findings": [
+        {
+          "category": "keyboard",
+          "severity": "major",
+          "method": "manual",
+          "summary": "Contact navigation item is skipped during sequential keyboard navigation.",
+          "evidence": "The visible navigation item never receives focus after 20 Tab presses.",
+          "reproduction": "Load home page, press Tab repeatedly and inspect focus sequence."
+        }
+      ],
+      "criterion_results": [
+        {
+          "criterion_id": "contact_page",
+          "status": "unknown",
+          "evidence": "Criterion could not be evaluated because no successful task completion was observed."
+        },
+        {
+          "criterion_id": "contact_method",
+          "status": "unknown",
+          "evidence": "Criterion could not be evaluated because no successful task completion was observed."
+        }
+      ]
+    },
+    {
+      "id": "original-contact-keyboard-02",
+      "scenario_id": "find-contact",
+      "variant_id": "original",
+      "environment": {
+        "browser": "Chromium 130",
+        "viewport": "1280x800",
+        "input_mode": "keyboard",
+        "assistive_technology": "none"
+      },
+      "outcome": "success",
+      "duration_seconds": 80,
+      "steps": 9,
+      "findings": [],
+      "criterion_results": [
+        {
+          "criterion_id": "contact_page",
+          "status": "met",
+          "evidence": "The recorded interaction reached the required information."
+        },
+        {
+          "criterion_id": "contact_method",
+          "status": "met",
+          "evidence": "The required value was identified in the recorded interaction."
+        }
+      ]
+    },
+    {
+      "id": "original-contact-unattempted",
+      "scenario_id": "find-contact",
+      "variant_id": "original",
+      "environment": {
+        "browser": "Chromium 130",
+        "viewport": "1280x800",
+        "input_mode": "keyboard",
+        "assistive_technology": "none"
+      },
+      "outcome": "not_attempted",
+      "findings": [],
+      "criterion_results": [
+        {
+          "criterion_id": "contact_page",
+          "status": "unknown",
+          "evidence": "Criterion could not be evaluated because no successful task completion was observed."
+        },
+        {
+          "criterion_id": "contact_method",
+          "status": "unknown",
+          "evidence": "Criterion could not be evaluated because no successful task completion was observed."
+        }
+      ]
+    },
+    {
+      "id": "modern-contact-keyboard-01",
+      "scenario_id": "find-contact",
+      "variant_id": "modernized",
+      "environment": {
+        "browser": "Chromium 130",
+        "viewport": "1280x800",
+        "input_mode": "keyboard",
+        "assistive_technology": "none"
+      },
+      "outcome": "success",
+      "duration_seconds": 68,
+      "steps": 7,
+      "findings": [],
+      "criterion_results": [
+        {
+          "criterion_id": "contact_page",
+          "status": "met",
+          "evidence": "The recorded interaction reached the required information."
+        },
+        {
+          "criterion_id": "contact_method",
+          "status": "met",
+          "evidence": "The required value was identified in the recorded interaction."
+        }
+      ]
+    },
+    {
+      "id": "modern-contact-keyboard-02",
+      "scenario_id": "find-contact",
+      "variant_id": "modernized",
+      "environment": {
+        "browser": "Chromium 130",
+        "viewport": "1280x800",
+        "input_mode": "keyboard",
+        "assistive_technology": "none"
+      },
+      "outcome": "success",
+      "duration_seconds": 74,
+      "steps": 8,
+      "findings": [],
+      "criterion_results": [
+        {
+          "criterion_id": "contact_page",
+          "status": "met",
+          "evidence": "The recorded interaction reached the required information."
+        },
+        {
+          "criterion_id": "contact_method",
+          "status": "met",
+          "evidence": "The required value was identified in the recorded interaction."
+        }
+      ]
+    },
+    {
+      "id": "original-hours-touch-01",
+      "scenario_id": "find-hours",
+      "variant_id": "original",
+      "environment": {
+        "browser": "Mobile Safari 17",
+        "viewport": "390x844",
+        "input_mode": "touch",
+        "assistive_technology": "none"
+      },
+      "outcome": "partial",
+      "duration_seconds": 50,
+      "steps": 6,
+      "findings": [
+        {
+          "category": "content",
+          "severity": "moderate",
+          "method": "manual",
+          "summary": "Opening hours are shown without identifying the applicable day.",
+          "evidence": "The page presents a single time range with no weekday label."
+        }
+      ],
+      "criterion_results": [
+        {
+          "criterion_id": "hours_location",
+          "status": "met",
+          "evidence": "Opening-hours section was reached and visually identified."
+        },
+        {
+          "criterion_id": "hours_correct",
+          "status": "not_met",
+          "evidence": "Displayed time range did not identify the day, so the requested time could not be confirmed."
+        }
+      ]
+    },
+    {
+      "id": "modern-hours-touch-01",
+      "scenario_id": "find-hours",
+      "variant_id": "modernized",
+      "environment": {
+        "browser": "Mobile Safari 17",
+        "viewport": "390x844",
+        "input_mode": "touch",
+        "assistive_technology": "none"
+      },
+      "outcome": "success",
+      "duration_seconds": 32,
+      "steps": 3,
+      "findings": [],
+      "criterion_results": [
+        {
+          "criterion_id": "hours_location",
+          "status": "met",
+          "evidence": "The recorded interaction reached the required information."
+        },
+        {
+          "criterion_id": "hours_correct",
+          "status": "met",
+          "evidence": "The required value was identified in the recorded interaction."
+        }
+      ]
+    }
+  ]
+}
