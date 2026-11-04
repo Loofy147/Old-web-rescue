@@ -3,7 +3,7 @@ import { parseImageMaps, normalizeDestination, summarizeRegions } from './pixel-
 const MAX_SOURCE_BYTES = 5 * 1024 * 1024;
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const DEMO_BASE_URL = 'https://old.example.org/gallery/reading-room.html';
-const DEMO_HTML = \`<!doctype html>
+const DEMO_HTML = `<!doctype html>
 <html lang="en">
 <head><title>Illustrative Image Map</title></head>
 <body>
@@ -19,7 +19,7 @@ const DEMO_HTML = \`<!doctype html>
     <area shape="rect" coords="250,390,310,420">
   </map>
 </body>
-</html>\`;
+</html>`;
 
 const byId = (id) => document.getElementById(id);
 const elements = {
@@ -58,7 +58,7 @@ let lastFilteredRegions = [];
 
 function setStatus(message, kind = 'normal') {
   elements.importStatus.textContent = message;
-  elements.importStatus.className = \`status-line\${kind === 'normal' ? '' : \` \${kind}\`}\`;
+  elements.importStatus.className = `status-line${kind === 'normal' ? '' : ` ${kind}`}`;
 }
 
 function makeElement(tag, className, text = null) {
@@ -81,7 +81,7 @@ function safeExternalLink(rawUrl, label) {
 
 function formatShape(shape) {
   const names = { rect: 'Rectangle', circle: 'Circle', poly: 'Polygon', polygon: 'Polygon', default: 'Default area' };
-  return names[shape] || \`Unknown: \${shape}\`;
+  return names[shape] || `Unknown: ${shape}`;
 }
 
 function warningLabel(code, region) {
@@ -89,7 +89,7 @@ function warningLabel(code, region) {
     'missing-alt': 'ALT NOT PROVIDED',
     'empty-alt': 'ALT IS EMPTY',
     'missing-label': 'LABEL NEEDED',
-    'duplicate-destination': \`DUPLICATE TARGET × \${region.duplicateDestinationCount}\`,
+    'duplicate-destination': `DUPLICATE TARGET × ${region.duplicateDestinationCount}`,
     'invalid-coordinate-count': 'COORDINATE COUNT INVALID',
     'non-numeric-coordinate': 'COORDINATE NOT NUMERIC',
     'missing-coordinates': 'COORDINATES MISSING',
@@ -135,7 +135,7 @@ function renderGeometry() {
 
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.classList.add('geometry-svg');
-  svg.setAttribute('viewBox', \`0 0 \${width} \${height}\`);
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
   svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('focusable', 'false');
@@ -165,14 +165,14 @@ function renderGeometry() {
       if (region.index === selectedRegionIndex) circle.classList.add('is-selected');
       if (region.warnings.length) circle.classList.add('has-issue');
       const title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = \`Region \${region.index}\`;
+      title.textContent = `Region ${region.index}`;
       circle.append(title);
       svg.append(circle);
       drawn += 1;
       continue;
     } else if (region.shape === 'poly' || region.shape === 'polygon') {
       const pairs = [];
-      for (let index = 0; index < coords.length; index += 2) pairs.push(\`\${coords[index]},\${coords[index + 1]}\`);
+      for (let index = 0; index < coords.length; index += 2) pairs.push(`${coords[index]},${coords[index + 1]}`);
       shape.setAttribute('points', pairs.join(' '));
     } else if (region.shape === 'default') {
       // Default areas cover the entire source image; render a boundary because
@@ -185,7 +185,7 @@ function renderGeometry() {
       defaultRect.classList.add('geometry-region');
       if (region.index === selectedRegionIndex) defaultRect.classList.add('is-selected');
       const title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = \`Region \${region.index}: default area\`;
+      title.textContent = `Region ${region.index}: default area`;
       defaultRect.append(title);
       svg.append(defaultRect);
       drawn += 1;
@@ -199,7 +199,7 @@ function renderGeometry() {
     if (region.index === selectedRegionIndex) shape.classList.add('is-selected');
     if (region.warnings.length) shape.classList.add('has-issue');
     const title = document.createElementNS(SVG_NS, 'title');
-    title.textContent = \`Region \${region.index}\`;
+    title.textContent = `Region ${region.index}`;
     shape.append(title);
     svg.append(shape);
 
@@ -222,8 +222,8 @@ function renderGeometry() {
   } else {
     board.append(svg);
   }
-  elements.mapDimension.textContent = \`\${Math.round(width)} × \${Math.round(height)} PX\`;
-  elements.geometryNote.textContent = \`\${drawn} region\${drawn === 1 ? '' : 's'} plotted\${skipped ? \` · \${skipped} geometry issue\${skipped === 1 ? '' : 's'} omitted\` : ''}. Coordinate view is schematic; no source image is fetched.\`;
+  elements.mapDimension.textContent = `${Math.round(width)} × ${Math.round(height)} PX`;
+  elements.geometryNote.textContent = `${drawn} region${drawn === 1 ? '' : 's'} plotted${skipped ? ` · ${skipped} geometry issue${skipped === 1 ? '' : 's'} omitted` : ''}. Coordinate view is schematic; no source image is fetched.`;
 }
 
 function makeBoardEmpty(heading, description) {
@@ -233,7 +233,7 @@ function makeBoardEmpty(heading, description) {
 }
 
 function createBadge(text, kind = '') {
-  return makeElement('span', \`region-status\${kind ? \` \${kind}\` : ''}\`, text);
+  return makeElement('span', `region-status${kind ? ` ${kind}` : ''}`, text);
 }
 
 function renderRegionCard(region) {
@@ -243,12 +243,12 @@ function renderRegionCard(region) {
   const select = makeElement('button', 'region-select');
   select.type = 'button';
   select.setAttribute('aria-pressed', String(region.index === selectedRegionIndex));
-  select.setAttribute('aria-label', \`Locate region \${region.index}: \${region.label || 'source label missing'}\`);
+  select.setAttribute('aria-label', `Locate region ${region.index}: ${region.label || 'source label missing'}`);
   const number = makeElement('span', 'region-number', String(region.index).padStart(2, '0'));
   const titleWrap = makeElement('span', 'region-title-wrap');
-  const title = region.label || \`Region \${region.index} — no source label\`;
+  const title = region.label || `Region ${region.index} — no source label`;
   titleWrap.append(makeElement('span', 'region-title', title));
-  const meta = makeElement('span', 'region-meta', \`\${formatShape(region.shape)} · \${region.mapId ? \`Map \${region.mapId}\` : 'Unassociated area'}\`);
+  const meta = makeElement('span', 'region-meta', `${formatShape(region.shape)} · ${region.mapId ? `Map ${region.mapId}` : 'Unassociated area'}`);
   titleWrap.append(meta);
   select.append(number, titleWrap);
   select.addEventListener('click', () => {
@@ -271,7 +271,7 @@ function renderRegionCard(region) {
       const kind = warning === 'missing-label' || warning === 'invalid-or-unsafe-href' || warning === 'non-numeric-coordinate'
         ? ' issue'
         : '';
-      warningRow.append(makeElement('span', \`warning-chip\${kind}\`, warningLabel(warning, region)));
+      warningRow.append(makeElement('span', `warning-chip${kind}`, warningLabel(warning, region)));
     }
     card.append(warningRow);
   }
@@ -305,7 +305,7 @@ function renderRegionCard(region) {
 }
 
 function renderRegionList() {
-  const query = elements.search.value.trim().toLowerCase().replace(/[\\s_-]+/g, ' ');
+  const query = elements.search.value.trim().toLowerCase().replace(/[\s_-]+/g, ' ');
   const all = analysis.regions;
   const filtered = all.filter((region) => {
     if (!query) return true;
@@ -314,16 +314,16 @@ function renderRegionList() {
       region.label, region.labelSource, region.labelStatus, region.title, region.alt,
       region.hrefRaw, region.hrefResolved, region.originalUrl, region.archiveUrl,
       region.destinationStatus, region.warnings.join(' '),
-    ].filter(Boolean).join(' ').toLowerCase().replace(/[\\s_-]+/g, ' ');
+    ].filter(Boolean).join(' ').toLowerCase().replace(/[\s_-]+/g, ' ');
     return searchable.includes(query);
   });
   lastFilteredRegions = filtered;
   elements.regionList.replaceChildren();
   for (const region of filtered) elements.regionList.append(renderRegionCard(region));
-  elements.regionCount.textContent = \`\${filtered.length}/\${all.length}\`;
+  elements.regionCount.textContent = `${filtered.length}/${all.length}`;
   elements.filterStatus.textContent = query
-    ? \`\${filtered.length} of \${all.length} regions match “\${query}”.\`
-    : \`\${all.length} region\${all.length === 1 ? '' : 's'} from \${analysis.maps.length} map\${analysis.maps.length === 1 ? '' : 's'}.\`;
+    ? `${filtered.length} of ${all.length} regions match “${query}”.`
+    : `${all.length} region${all.length === 1 ? '' : 's'} from ${analysis.maps.length} map${analysis.maps.length === 1 ? '' : 's'}.`;
   elements.emptyResults.hidden = filtered.length > 0;
   if (query && filtered.length === 0) elements.emptyResults.hidden = false;
 }
@@ -337,11 +337,11 @@ function renderProvenance() {
     ? analysis.diagnostics.map((item) => item.message).join(' ')
     : 'No parser-level structural diagnostics.';
   const items = [
-    ['Source reference', \`\${sourceName} · \${sourceUrl}\`],
-    ['Maps and images', \`\${analysis.maps.length} map(s): \${mapNames}. \${analysis.images.length} image element(s) detected.\`],
-    ['Label quality', \`\${summary.verifiedLabels} source labels · \${summary.reviewLabels} title-only candidates · \${summary.missingLabels} missing labels.\`],
-    ['Destination state', \`\${summary.archiveReplacements} archive replacement(s) · \${summary.duplicateDestinations} region(s) with duplicate destinations.\`],
-    ['Geometry', \`\${summary.geometryWarnings} region(s) with invalid geometry. \${diagnosticText}\`],
+    ['Source reference', `${sourceName} · ${sourceUrl}`],
+    ['Maps and images', `${analysis.maps.length} map(s): ${mapNames}. ${analysis.images.length} image element(s) detected.`],
+    ['Label quality', `${summary.verifiedLabels} source labels · ${summary.reviewLabels} title-only candidates · ${summary.missingLabels} missing labels.`],
+    ['Destination state', `${summary.archiveReplacements} archive replacement(s) · ${summary.duplicateDestinations} region(s) with duplicate destinations.`],
+    ['Geometry', `${summary.geometryWarnings} region(s) with invalid geometry. ${diagnosticText}`],
     ['Execution boundary', 'HTML was parsed as text. Scripts, styles and embedded content were not executed. No network requests were made.'],
   ];
   for (const [heading, value] of items) {
@@ -379,8 +379,8 @@ function analyzeSource() {
     elements.emptyState.hidden = true;
     elements.exportCsv.disabled = analysis.regions.length === 0;
     elements.exportJson.disabled = false;
-    const mapLabel = \`\${analysis.maps.length} map\${analysis.maps.length === 1 ? '' : 's'}\`;
-    elements.resultsSubtitle.textContent = \`\${analysis.regions.length} region\${analysis.regions.length === 1 ? '' : 's'} extracted from \${mapLabel}. Original attributes and destination provenance retained.\`;
+    const mapLabel = `${analysis.maps.length} map${analysis.maps.length === 1 ? '' : 's'}`;
+    elements.resultsSubtitle.textContent = `${analysis.regions.length} region${analysis.regions.length === 1 ? '' : 's'} extracted from ${mapLabel}. Original attributes and destination provenance retained.`;
     renderSummary();
     renderGeometry();
     renderRegionList();
@@ -388,13 +388,13 @@ function analyzeSource() {
 
     if (analysis.regions.length) {
       const missing = analysis.summary.missingLabels;
-      setStatus(\`Inspection complete: \${analysis.regions.length} region(s), \${missing} without a usable source label. Review the warnings before reusing these destinations.\`, 'success');
+      setStatus(`Inspection complete: ${analysis.regions.length} region(s), ${missing} without a usable source label. Review the warnings before reusing these destinations.`, 'success');
     } else {
       setStatus('No image-map regions were found. The HTML was parsed safely, but no <area> elements were available inside <map> blocks.', 'error');
     }
   } catch (error) {
     analysis = null;
-    setStatus(\`Could not parse this source: \${error instanceof Error ? error.message : String(error)}\`, 'error');
+    setStatus(`Could not parse this source: ${error instanceof Error ? error.message : String(error)}`, 'error');
   }
 }
 
@@ -413,7 +413,7 @@ function downloadText(filename, content, contentType) {
 
 function csvCell(value) {
   const text = Array.isArray(value) ? value.join('|') : String(value ?? '');
-  return \`"\${text.replaceAll('"', '""')}"\`;
+  return `"${text.replaceAll('"', '""')}"`;
 }
 
 function exportCsv() {
@@ -427,8 +427,8 @@ function exportCsv() {
   ];
   const rows = [columns.map(([, header]) => csvCell(header)).join(',')];
   for (const region of lastFilteredRegions) rows.push(columns.map(([key]) => csvCell(region[key])).join(','));
-  downloadText('pixel-atlas-regions.csv', \`\\ufeff\${rows.join('\\r\\n')}\`, 'text/csv;charset=utf-8');
-  setStatus(\`Exported \${lastFilteredRegions.length} currently visible region(s) to CSV.\`, 'success');
+  downloadText('pixel-atlas-regions.csv', `\ufeff${rows.join('\r\n')}`, 'text/csv;charset=utf-8');
+  setStatus(`Exported ${lastFilteredRegions.length} currently visible region(s) to CSV.`, 'success');
 }
 
 function exportJson() {
@@ -467,9 +467,9 @@ async function loadLocalFile(file) {
     sourceName = file.name;
     sourceMode = 'file';
     elements.fileName.textContent = file.name;
-    setStatus(\`Loaded \${file.name} locally (\${file.size.toLocaleString()} bytes). No upload occurred.\`, 'success');
+    setStatus(`Loaded ${file.name} locally (${file.size.toLocaleString()} bytes). No upload occurred.`, 'success');
   } catch (error) {
-    setStatus(\`Could not read the local file: \${error instanceof Error ? error.message : String(error)}\`, 'error');
+    setStatus(`Could not read the local file: ${error instanceof Error ? error.message : String(error)}`, 'error');
   }
 }
 
