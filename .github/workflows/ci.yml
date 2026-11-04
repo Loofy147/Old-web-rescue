@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pilot-001:
+    name: Pilot 001 — Node tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test game engine
+        working-directory: Pilot-001
+        run: node --test game-engine.test.mjs
+
+  pilot-002:
+    name: Pilot 002 — Python tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run unit tests
+        working-directory: Pilot-002
+        run: python -m unittest discover -s tests -v
+      - name: Compile tools
+        working-directory: Pilot-002
+        run: python -m py_compile geocities_explorer.py legacy_html_audit.py
+      - name: Validate HTML audit fixture output
+        working-directory: Pilot-002
+        run: python legacy_html_audit.py fixtures/legacy-image-map-sample.html --json > audit-output.json
