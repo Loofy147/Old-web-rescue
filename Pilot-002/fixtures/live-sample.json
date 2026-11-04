@@ -1,0 +1,81 @@
+{
+  "retrieved_on": "2026-11-03",
+  "service": "Arquivo.pt",
+  "collection": "Geocities",
+  "text_search_observations": [
+    {
+      "query": "personal diary",
+      "estimated_nr_results": 6035,
+      "sample": {
+        "title": "My Personal Diary",
+        "originalURL": "https://geocities.com/kreisler76/diary.html",
+        "linkToArchive": "https://arquivo.pt/wayback/20090427031225/https://geocities.com/kreisler76/diary.html",
+        "linkToNoFrame": "https://arquivo.pt/noFrame/replay/20090427031225/https://geocities.com/kreisler76/diary.html",
+        "tstamp": "20090427031225",
+        "collection": "Geocities"
+      }
+    },
+    {
+      "query": "computers",
+      "estimated_nr_results": 50659,
+      "sample": {
+        "title": "Welcome to How Computers Work",
+        "originalURL": "https://geocities.com/howcompworks/index.htm",
+        "linkToArchive": "https://arquivo.pt/wayback/20091027075041/https://geocities.com/howcompworks/index.htm",
+        "linkToNoFrame": "https://arquivo.pt/noFrame/replay/20091027075041/https://geocities.com/howcompworks/index.htm",
+        "tstamp": "20091027075041",
+        "collection": "Geocities"
+      }
+    },
+    {
+      "query": "music",
+      "estimated_nr_results": 371561,
+      "sample": {
+        "title": "Music History Resources",
+        "originalURL": "https://geocities.com/papandrew/index.html",
+        "linkToArchive": "https://arquivo.pt/wayback/20090427170228/https://geocities.com/papandrew/index.html",
+        "tstamp": "20090427170228",
+        "collection": "Geocities"
+      }
+    },
+    {
+      "query": "dogs",
+      "estimated_nr_results": 86010,
+      "sample": {
+        "title": "Dogs, Dogs, Dogs",
+        "originalURL": "https://geocities.com/babycass7/dogs.htm",
+        "linkToArchive": "https://arquivo.pt/wayback/20091115052310/https://geocities.com/babycass7/dogs.htm",
+        "tstamp": "20091115052310",
+        "collection": "Geocities"
+      }
+    },
+    {
+      "query": "fan",
+      "estimated_nr_results": 144330,
+      "sample": {
+        "title": "Fan Media: .: Fan Fiction .: Fan Games .: Fan Movi",
+        "originalURL": "https://geocities.com/data4fans/enter/left.html",
+        "linkToArchive": "https://arquivo.pt/wayback/20091027162309/https://geocities.com/data4fans/enter/left.html",
+        "tstamp": "20091027162309",
+        "collection": "Geocities"
+      }
+    }
+  ],
+  "image_search_observations": [
+    {
+      "query": "dogs",
+      "totalItems": 51537,
+      "sample": {
+        "pageTitle": "Página de FATY RAMOS - Meu PET",
+        "pageURL": "http://www.meupet.org/profile/FATYRAMOS",
+        "pageTstamp": "20090624024559",
+        "imgTstamp": "20090711063415",
+        "imgSrc": "http://dl10.glitter-graphics.net/pub/40/40190sv47swuato.gif",
+        "imgLinkToArchive": "https://arquivo.pt/wayback/20090711063415im_/http://dl10.glitter-graphics.net/pub/40/40190sv47swuato.gif",
+        "pageLinkToArchive": "https://arquivo.pt/wayback/20090624024559/http://www.meupet.org/profile/FATYRAMOS",
+        "imgAlt": ["Dogs Comments For Hi5", "Dogs Graphics For Hi5"],
+        "collection": ["AWP10", "AWP11", "Geocities"]
+      }
+    }
+  ]
+}
