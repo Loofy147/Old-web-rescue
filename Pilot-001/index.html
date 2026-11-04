@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101828">
+  <meta name="description" content="An independent, accessible memory-game reconstruction from the Old Web Rescue Lab.">
+  <title>Old Web Rescue Lab — Memory Reboot</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to game</a>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Old Web Rescue Lab home">
+        <span class="brand-mark" aria-hidden="true">OW</span>
+        <span class="brand-copy"><strong>OLD WEB RESCUE LAB</strong><small>ARCHIVE → INSPECT → REBUILD</small></span>
+      </a>
+      <span class="experiment-id">EXPERIMENT 001 <span aria-hidden="true">·</span> 2026</span>
+    </header>
+
+    <main id="main">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> LEGACY INTERACTION RESCUE</p>
+        <h1 id="page-title">The good bits <span>survive.</span></h1>
+        <p class="lede">A modern, keyboard-friendly memory game inspired by the interaction pattern of a 1996 web experience. The original relied on a Shockwave plug-in; this rebuild runs locally with no external assets.</p>
+        <div class="origin-note">
+          <span class="origin-icon" aria-hidden="true">↳</span>
+          <p><strong>What we rescued:</strong> the simple “reveal two cards, find a pair” loop. <a href="https://www.spacejam.com/1996/cmp/junior/concentration.html" target="_blank" rel="noopener noreferrer">Inspect the original page</a>.</p>
+        </div>
+      </section>
+
+      <section class="game-panel" aria-labelledby="game-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">NO PLUG-INS · NO TRACKING · NO NETWORK</p>
+            <h2 id="game-heading">Memory reboot</h2>
+          </div>
+          <button id="new-game" class="secondary-button" type="button">↻ <span>New game</span></button>
+        </div>
+
+        <div class="stats" aria-label="Game statistics">
+          <div class="stat"><span class="stat-value" id="moves">0</span><span class="stat-label">MOVES</span></div>
+          <div class="stat"><span class="stat-value" id="pairs">0 / 8</span><span class="stat-label">PAIRS FOUND</span></div>
+          <div class="stat stat-progress"><span class="stat-value" id="progress-label">0%</span><span class="stat-label">RESTORED</span></div>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="Pairs found" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progress-bar">
+          <span id="progress-fill"></span>
+        </div>
+
+        <p class="game-instruction" id="game-instruction">Choose any card. Then find its matching pair.</p>
+        <div class="game-grid" id="game-grid" aria-label="Memory cards"></div>
+        <p class="game-status" id="game-status" role="status" aria-live="polite" aria-atomic="true">New game ready. Find all eight pairs.</p>
+
+        <details class="how-to-play">
+          <summary>How to play</summary>
+          <ol>
+            <li>Choose a card to reveal its symbol.</li>
+            <li>Choose a second card and try to find the matching symbol.</li>
+            <li>Matching pairs stay revealed. Mismatched pairs turn back over.</li>
+            <li>Use Tab to move between cards and Enter or Space to reveal one.</li>
+          </ol>
+        </details>
+      </section>
+
+      <section class="design-notes" aria-labelledby="design-heading">
+        <p class="eyebrow">THE REBUILD CONTRACT</p>
+        <h2 id="design-heading">Same useful idea. Fewer barriers.</h2>
+        <div class="principles">
+          <article><span class="principle-number">01</span><h3>Keyboard first</h3><p>Every card is a native button with a visible focus state.</p></article>
+          <article><span class="principle-number">02</span><h3>Readable state</h3><p>Cards have text labels; game progress is announced to assistive technology.</p></article>
+          <article><span class="principle-number">03</span><h3>Portable</h3><p>No plug-in, account, analytics, external asset or server required.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>OLD WEB RESCUE LAB <span aria-hidden="true">/</span> PILOT 001</span>
+      <span>Independent prototype · not affiliated with Warner Bros.</span>
+    </footer>
+  </div>
+</body>
+</html>
