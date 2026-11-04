@@ -1,7 +1,7 @@
 # Old Web Rescue Lab
 
 **Canonical repository:** https://github.com/Loofy147/Old-web-rescue  
-**Baseline:** v0.2.0  
+**Current baseline:** v0.2.0 · **Active work:** Pilot 003 and Pilot 004 in [PR #2](https://github.com/Loofy147/Old-web-rescue/pull/2)  
 **Purpose:** evidence-led web archaeology, structural HTML triage, preservation research and independent modernization prototypes.
 
 Old Web Rescue Lab investigates websites and web experiences that survived, became outdated, partially broke, or disappeared. We follow real user journeys, capture reproducible evidence, separate website defects from inspection-tool limitations, and build independent prototypes when the findings justify it.
@@ -20,6 +20,16 @@ Two standard-library Python tools:
 - `Pilot-002/geocities_explorer.py`: search Arquivo.pt's GeoCities collection, inspect capture histories and search archived images; export JSON/CSV.
 - `Pilot-002/legacy_html_audit.py`: inspect saved HTML for structural signals such as missing text alternatives, image-map problems, legacy markup, frames and missing document metadata.
 
+### Pilot 003 — Pixel Atlas
+A local-only image-map inspector that turns legacy `<map>` / `<area>` markup into a searchable region inventory, a coordinate schematic, label-quality warnings and provenance-aware original/archive destination links. It does not execute imported scripts, fetch source images, or crawl extracted links.
+
+Start with `Pilot-003/README.md`.
+
+### Pilot 004 — Website Rescue Benchmark
+A standard-library Python CLI that validates investigator-authored task runs and compares an original page with independent prototypes under exactly matched scenario and environment records. It requires criterion-level evidence, retains blocked/partial/failed outcomes, and refuses to pool completion rates across unlike tasks or emit a composite site score.
+
+Start with `Pilot-004/README.md`.
+
 ## Run locally
 
 Pilot 001:
@@ -36,47 +46,52 @@ python -m unittest discover -s tests -v
 python -m py_compile geocities_explorer.py legacy_html_audit.py
 ```
 
-Example archive search:
+Pilot 003:
 ```bash
-python geocities_explorer.py search "personal diary" --limit 5
-python geocities_explorer.py history "https://geocities.com/kreisler76/diary.html" --format json
-python geocities_explorer.py images "dogs" --limit 10
+cd Pilot-003
+node --test tests/pixel-atlas-core.test.mjs
+python -m http.server 8000
 ```
+Open `http://localhost:8000`. Optional browser smoke: `python browser-smoke.py` (requires Python Playwright + Chromium).
 
-Example local HTML triage:
+Pilot 004:
 ```bash
-python legacy_html_audit.py saved-page.html --json
+cd Pilot-004
+python -m unittest discover -s tests -v
+python rescue_benchmark.py validate fixtures/synthetic-benchmark.json
+python rescue_benchmark.py report fixtures/synthetic-benchmark.json
+python rescue_benchmark.py report fixtures/synthetic-benchmark.json --format json
 ```
 
 ## Verification baseline (2026-11-04)
 
-| Check | Result |
-|---|---:|
-| Pilot 001 Node tests | 6/6 PASS |
-| Pilot 001 browser smoke | PASS — 16 cards; keyboard match/mismatch recovery; restart; 320/390/1440 px; zero page errors |
-| Pilot 002 Python tests | 23/23 PASS |
-| Python compilation | PASS |
-| HTML fixture audit output | Valid JSON |
-| GitHub Actions | PASS — Node, Python 3.10 and 3.12, compilation and fixture validation |
+| Pilot | Verification |
+|---|---|
+| 001 | 6/6 Node tests; keyboard browser smoke; 320/390/1440 px; zero page errors |
+| 002 | 23/23 Python tests; compilation; fixture audit |
+| 003 | 18/18 Node tests; Playwright smoke: local import, search, keyboard selection, exports, unsafe-link blocking, source-injection resistance; 320/390/1440 px; zero external requests and page errors |
+| 004 | 35/35 Python tests; compile; synthetic fixture validation; JSON and Markdown report checks; invalid-input/overflow, outcome-consistency, exact-environment and determinism controls |
 
-Latest verified CI run: [GitHub Actions run #23](https://github.com/Loofy147/Old-web-rescue/actions/runs/41821030322).
-
-The Playwright browser smoke remains an optional local check; it is not currently a CI job.
+Pilot 004 was run locally on Python 3.13.5. The GitHub Actions configuration is set to check Python 3.10 and 3.12; those results remain pending execution for this pull request. Browser smoke scripts remain optional local checks and are not CI gates.
 
 ## Research discipline
 
 Claims use explicit evidence labels: `ESTABLISHED`, `EXPERIMENTALLY_SUPPORTED`, `USER_REPORTED`, `INFERENCE`, `HYPOTHESIS`, `CONTRADICTED`, `UNKNOWN`, and `OPEN`. Record exact URLs, capture timestamps, viewports, journeys, methods, failures, tool limits and next discriminating tests.
 
-The HTML auditor is structural triage, **not** a WCAG conformance checker. Screenshots, HTML validation and automated tools cannot establish complete accessibility. Keyboard, screen-reader, contrast and human evaluation remain separate.
+The HTML auditors are structural triage, **not** WCAG conformance checkers. Screenshots, HTML validation and automated tools cannot establish complete accessibility. Keyboard, screen-reader, contrast and human evaluation remain separate.
+
+Pixel Atlas uses a bounded tokenizer, not a standards-complete HTML5 parser. A title is only a review candidate, not a verified text alternative. The coordinate display is schematic. See `Pilot-003/README.md`.
+
+Website Rescue Benchmark analyzes recorded observations; it does not crawl sites, conduct user studies or verify that submitted evidence is true. Comparisons are descriptive and only emitted for exact scenario/environment matches. No whole-domain or composite quality score is produced. See `Pilot-004/METHOD.md`.
 
 The Arquivo.pt CLI tests use controlled responses. Direct DNS/network access from the original build container was unavailable, so no live CLI request is claimed as a locally executed test; the API endpoints were independently exercised during research. Capture timestamps are archive dates, not proof of original publication dates.
 
 ## Preservation and rights
 
-Archived content may contain personal information, copyrighted material and untrusted outbound links. Retrieval does not grant republication rights. The tools do not execute archived scripts or automatically visit extracted destinations. Do not bulk mirror or republish third-party material without a rights basis.
+Archived content may contain personal information, copyrighted material and untrusted outbound links. Retrieval does not grant republication rights. The tools do not execute archived scripts or automatically visit extracted destinations. Do not bulk mirror or republish third-party material without a rights basis. Scrub session identifiers, access tokens and participant details from benchmark URLs and evidence before committing records.
 
 ## Next
 
-Pilot 003 is **Pixel Atlas**: an accessible, searchable companion interface for image-map-heavy pixel directories. Its scope and acceptance criteria are tracked in [GitHub issue #1](https://github.com/Loofy147/Old-web-rescue/issues/1) and `ROADMAP.md`.
+Pilot 004 is tracked in [GitHub issue #3](https://github.com/Loofy147/Old-web-rescue/issues/3). The next research opportunity after a real benchmark run is a Textfiles Reader for preserved text archives, keeping original bytes distinct from any normalized reading view.
 
 See `RESEARCH_PROTOCOL.md`, `IP_AND_PRESERVATION.md`, `CONTRIBUTING.md`, and `CHANGELOG.md` for the operating rules and repository history.

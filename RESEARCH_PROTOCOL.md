@@ -55,11 +55,13 @@ Prefer at least three representative tasks when the site supports them. Examples
 
 When a tool cannot interact with a page (for example, a frame, plugin, script-heavy canvas or anti-bot gate), label the result as a tool/access limitation until a separate method establishes a site defect.
 
-## 6. Scoring
+## 6. Scoring and comparison
 
-If a comparative score is used, declare the dimensions, weights, scale anchors, page scope and evidence coverage before assigning it. Keep `UNKNOWN` dimensions visible; do not silently substitute zero or an assumed average. Scores are prioritization aids, not compliance certificates.
+Do not create a single composite website score by default. Keep usefulness, task completion, accessibility evidence, technical condition, responsive behavior, information architecture and preservation completeness as separate dimensions. Preserve `UNKNOWN` values explicitly; do not silently substitute zero or an assumed average.
 
-Suggested dimensions: usefulness, task usability, accessibility evidence, technical condition, responsive behavior, information architecture and preservation completeness. Publish raw observations alongside any aggregate score.
+For baseline-versus-prototype comparisons, define the task objective and observable success criteria before testing. Record the browser, viewport, input mode and assistive-technology context for every run. Compare outcomes only under matched task and environment conditions. Keep success, partial, blocked, failed and not-attempted outcomes distinct. Report duration and step medians for successful runs separately from completion rates.
+
+If a decision process later requires a weighted priority score, declare the dimensions, weights, scale anchors, page scope and evidence coverage first. Publish raw observations and counterevidence alongside it. A prioritization score is not a direct empirical result, accessibility certificate or whole-domain conclusion.
 
 ## 7. Prototype gate
 
