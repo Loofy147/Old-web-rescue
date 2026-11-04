@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101828">
+  <meta name="description" content="An independent, accessible memory-game reconstruction from the Old Web Rescue Lab.">
+  <title>Old Web Rescue Lab — Memory Reboot</title>
+  <style>
+:root {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --surface: #121d30;
+  --surface-2: #1a2940;
+  --surface-3: #233650;
+  --line: #30445e;
+  --text: #f3f7ff;
+  --muted: #b4c2d5;
+  --faint: #8193aa;
+  --mint: #a2f3d0;
+  --mint-ink: #0c2820;
+  --gold: #ffd58b;
+  --danger: #ffc0b9;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--bg); scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 78% 4%, rgba(78, 124, 147, .20), transparent 36rem),
+    radial-gradient(ellipse at 5% 45%, rgba(53, 90, 119, .15), transparent 32rem),
+    var(--bg);
+  line-height: 1.5;
+}
+a { color: var(--mint); text-underline-offset: .18em; }
+a:hover { color: #d3ffeb; }
+button { font: inherit; }
+button:focus-visible, a:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 10;
+  top: .5rem;
+  left: .5rem;
+  padding: .7rem 1rem;
+  color: var(--mint-ink);
+  background: var(--mint);
+  border-radius: .5rem;
+  transform: translateY(-180%);
+}
+.skip-link:focus { transform: translateY(0); }
+.shell { width: min(100% - 2rem, 1040px); margin: 0 auto; }
+.topbar {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(180, 194, 213, .17);
+}
+.brand { display: inline-flex; align-items: center; gap: .75rem; color: var(--text); text-decoration: none; }
+.brand-mark {
+  width: 40px; height: 40px; display: grid; place-items: center;
+  border: 1px solid var(--mint); border-radius: 11px;
+  color: var(--mint); font-size: .8rem; font-weight: 850; letter-spacing: -.08em;
+  background: rgba(162, 243, 208, .07);
+}
+.brand-copy { display: grid; line-height: 1.2; gap: .2rem; }
+.brand-copy strong { font-size: .77rem; letter-spacing: .12em; }
+.brand-copy small, .experiment-id { color: var(--muted); font-size: .65rem; letter-spacing: .13em; }
+.experiment-id { white-space: nowrap; }
+
+.intro { padding: clamp(2.5rem, 8vw, 5rem) 0 2.1rem; max-width: 780px; }
+.eyebrow { margin: 0 0 .9rem; color: var(--mint); font-size: .68rem; font-weight: 800; letter-spacing: .15em; }
+.live-dot { display: inline-block; width: 8px; height: 8px; margin-right: .45rem; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px rgba(162, 243, 208, .12); }
+h1 { margin: 0; max-width: 720px; font-size: clamp(2.5rem, 7.8vw, 5.2rem); line-height: .98; letter-spacing: -.065em; }
+h1 span { color: var(--mint); }
+.lede { max-width: 700px; margin: 1.3rem 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.16rem); line-height: 1.7; }
+.origin-note {
+  display: flex; gap: .8rem; align-items: flex-start; max-width: 690px;
+  margin-top: 1.6rem; padding: .9rem 1rem;
+  border: 1px solid var(--line); border-radius: .8rem; background: rgba(18, 29, 48, .75);
+}
+.origin-icon { flex: 0 0 auto; color: var(--gold); font-size: 1.2rem; font-weight: 800; }
+.origin-note p { margin: 0; color: var(--muted); font-size: .91rem; }
+.origin-note strong { color: var(--text); }
+
+.game-panel {
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid #3a526e;
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, rgba(26, 41, 64, .97), rgba(15, 25, 43, .98));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .24);
+}
+.panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.panel-heading .eyebrow { margin-bottom: .28rem; font-size: .61rem; }
+h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.04em; }
+.secondary-button {
+  min-height: 42px; padding: .55rem .85rem; display: inline-flex; align-items: center; gap: .45rem;
+  color: var(--text); background: var(--surface-3); border: 1px solid #536a84; border-radius: .65rem;
+  cursor: pointer; font-weight: 750; font-size: .85rem;
+}
+.secondary-button:hover { background: #2d4563; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; margin: 1.5rem 0 .75rem; }
+.stat { min-height: 70px; padding: .7rem .85rem; display: flex; flex-direction: column; justify-content: center; gap: .12rem; border: 1px solid var(--line); border-radius: .75rem; background: rgba(9, 17, 30, .42); }
+.stat-value { font-size: 1.35rem; font-weight: 850; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.stat-label { color: var(--faint); font-size: .58rem; font-weight: 800; letter-spacing: .13em; }
+.progress-track { height: 8px; overflow: hidden; border-radius: 999px; background: #304058; }
+.progress-track span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--mint); transition: width .22s ease; }
+.game-instruction { margin: 1.2rem 0 .8rem; color: var(--muted); font-size: .92rem; }
+.game-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.45rem, 1.6vw, .8rem); max-width: 660px; margin: 0 auto; }
+.memory-card {
+  position: relative; min-width: 0; aspect-ratio: 1.15 / 1; display: grid; place-items: center;
+  border: 1px solid #4a617d; border-radius: .85rem;
+  color: var(--text); background: linear-gradient(145deg, #263c58, #1b2b43);
+  cursor: pointer; box-shadow: inset 0 1px rgba(255,255,255,.06), 0 4px 12px rgba(0,0,0,.12);
+  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.memory-card:hover:not([aria-disabled="true"]) { transform: translateY(-2px); border-color: var(--mint); }
+.card-mark { display: grid; place-items: center; min-height: 1em; font-size: clamp(1.6rem, 5vw, 2.75rem); line-height: 1; }
+.memory-card:not(.is-open):not(.is-matched) .card-mark { color: var(--mint); font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 500; }
+.memory-card.is-open { color: #0f2030; border-color: var(--gold); background: linear-gradient(145deg, #ffe3ad, #f7c879); }
+.memory-card.is-open .card-mark { filter: none; }
+.memory-card.is-matched { color: var(--mint-ink); border-color: var(--mint); background: linear-gradient(145deg, #c2f8df, #8fe6bd); cursor: default; }
+.memory-card.is-matched::after { content: "✓"; position: absolute; top: .35rem; right: .5rem; color: #176347; font-size: .75rem; font-weight: 900; }
+.game-status { min-height: 1.6em; margin: 1rem 0 0; color: var(--mint); font-size: .88rem; font-weight: 650; text-align: center; }
+.how-to-play { max-width: 660px; margin: 1rem auto 0; border-top: 1px solid var(--line); color: var(--muted); }
+.how-to-play summary { width: fit-content; padding: .8rem 0 .25rem; color: var(--text); cursor: pointer; font-size: .85rem; font-weight: 750; }
+.how-to-play ol { margin: .4rem 0 .15rem; padding-left: 1.3rem; font-size: .85rem; line-height: 1.8; }
+
+.design-notes { padding: 3.6rem 0 3rem; }
+.design-notes h2 { max-width: 600px; margin-bottom: 1.2rem; }
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.principles article { padding: 1.15rem; border: 1px solid var(--line); border-radius: .8rem; background: rgba(18, 29, 48, .64); }
+.principle-number { color: var(--mint); font-size: .68rem; font-weight: 850; letter-spacing: .15em; }
+.principles h3 { margin: .55rem 0 .35rem; font-size: 1rem; }
+.principles p { margin: 0; color: var(--muted); font-size: .86rem; line-height: 1.6; }
+.footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0 1.4rem; border-top: 1px solid rgba(180, 194, 213, .17); color: var(--faint); font-size: .68rem; }
+.footer span:first-child { font-weight: 800; letter-spacing: .12em; }
+
+@media (max-width: 600px) {
+  .shell { width: min(100% - 1.1rem, 1040px); }
+  .topbar { min-height: 65px; }
+  .experiment-id { font-size: .56rem; letter-spacing: .07em; }
+  .brand-copy strong { font-size: .68rem; }
+  .brand-copy small { font-size: .55rem; }
+  .game-panel { border-radius: .95rem; }
+  .panel-heading { align-items: flex-start; }
+  .secondary-button { min-height: 38px; padding: .45rem .6rem; font-size: .76rem; }
+  .stats { gap: .45rem; }
+  .stat { min-height: 62px; padding: .55rem .6rem; }
+  .stat-value { font-size: 1.15rem; }
+  .stat-label { font-size: .52rem; }
+  .memory-card { border-radius: .65rem; }
+  .principles { grid-template-columns: 1fr; gap: .65rem; }
+  .principles article { padding: .9rem 1rem; }
+  .footer { flex-direction: column; gap: .35rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+</style>
+  
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to game</a>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Old Web Rescue Lab home">
+        <span class="brand-mark" aria-hidden="true">OW</span>
+        <span class="brand-copy"><strong>OLD WEB RESCUE LAB</strong><small>ARCHIVE → INSPECT → REBUILD</small></span>
+      </a>
+      <span class="experiment-id">EXPERIMENT 001 <span aria-hidden="true">·</span> 2026</span>
+    </header>
+
+    <main id="main">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> LEGACY INTERACTION RESCUE</p>
+        <h1 id="page-title">The good bits <span>survive.</span></h1>
+        <p class="lede">A modern, keyboard-friendly memory game inspired by the interaction pattern of a 1996 web experience. The original relied on a Shockwave plug-in; this rebuild runs locally with no external assets.</p>
+        <div class="origin-note">
+          <span class="origin-icon" aria-hidden="true">↗</span>
+          <p><strong>Why this exists:</strong> a 1996 game needs a Shockwave plug-in that modern browsers no longer support. We kept the useful “reveal, compare, remember” loop. <a href="https://www.spacejam.com/1996/cmp/junior/concentration.html" target="_blank" rel="noopener noreferrer">Inspect the original page</a>.</p>
+        </div>
+      </section>
+
+      <section class="game-panel" aria-labelledby="game-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">NO PLUG-INS · NO TRACKING · NO NETWORK</p>
+            <h2 id="game-heading">Memory reboot</h2>
+          </div>
+          <button id="new-game" class="secondary-button" type="button">↻ <span>New game</span></button>
+        </div>
+
+        <div class="stats" aria-label="Game statistics">
+          <div class="stat"><span class="stat-value" id="moves">0</span><span class="stat-label">MOVES</span></div>
+          <div class="stat"><span class="stat-value" id="pairs">0 / 8</span><span class="stat-label">PAIRS FOUND</span></div>
+          <div class="stat stat-progress"><span class="stat-value" id="progress-label">0%</span><span class="stat-label">RESTORED</span></div>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="Pairs found" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progress-bar">
+          <span id="progress-fill"></span>
+        </div>
+
+        <p class="game-instruction" id="game-instruction">Choose any card. Then find its matching pair.</p>
+        <div class="game-grid" id="game-grid" aria-label="Memory cards"></div>
+        <p class="game-status" id="game-status" role="status" aria-live="polite" aria-atomic="true">New game ready. Find all eight pairs.</p>
+
+        <details class="how-to-play">
+          <summary>How to play</summary>
+          <ol>
+            <li>Choose a card to reveal its symbol.</li>
+            <li>Choose a second card and try to find the matching symbol.</li>
+            <li>Matching pairs stay revealed. Mismatched pairs turn back over.</li>
+            <li>Use Tab to move between cards and Enter or Space to reveal one.</li>
+          </ol>
+        </details>
+      </section>
+
+      <section class="design-notes" aria-labelledby="design-heading">
+        <p class="eyebrow">THE REBUILD CONTRACT</p>
+        <h2 id="design-heading">Same useful idea. Fewer barriers.</h2>
+        <div class="principles">
+          <article><span class="principle-number">01</span><h3>Keyboard first</h3><p>Every card is a native button with a visible focus state.</p></article>
+          <article><span class="principle-number">02</span><h3>Readable state</h3><p>Cards have text labels; game progress is announced to assistive technology.</p></article>
+          <article><span class="principle-number">03</span><h3>Portable</h3><p>No plug-in, account, analytics, external asset or server required.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>OLD WEB RESCUE LAB <span aria-hidden="true">/</span> PILOT 001</span>
+      <span>Independent prototype · not affiliated with Warner Bros.</span>
+    </footer>
+  </div>
+<script>
+const DEFAULT_SYMBOLS = Object.freeze([
+  'satellite',
+  'planet',
+  'cassette',
+  'gamepad',
+  'star',
+  'disk',
+  'puzzle',
+  'rocket',
+]);
+
+/** Create a shuffled deck and a fresh, immutable-by-convention game state. */
+function createGame(symbols = DEFAULT_SYMBOLS, random = Math.random) {
+  if (!Array.isArray(symbols) || symbols.length < 2) {
+    throw new TypeError('Provide at least two unique symbols.');
+  }
+  if (new Set(symbols).size !== symbols.length) {
+    throw new TypeError('Symbols must be unique.');
+  }
+  if (symbols.some((symbol) => typeof symbol !== 'string' || !symbol.trim())) {
+    throw new TypeError('Every symbol must be a non-empty string.');
+  }
+  if (typeof random !== 'function') {
+    throw new TypeError('The random source must be a function.');
+  }
+
+  const cards = symbols.flatMap((pairId) => [
+    { id: `${pairId}-a`, pairId, label: pairId },
+    { id: `${pairId}-b`, pairId, label: pairId },
+  ]);
+
+  // Fisher–Yates shuffle. An injected random source keeps tests deterministic.
+  for (let i = cards.length - 1; i > 0; i -= 1) {
+    const sample = random();
+    if (!Number.isFinite(sample) || sample < 0 || sample >= 1) {
+      throw new RangeError('The random source must return a number in [0, 1).');
+    }
+    const j = Math.floor(sample * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+
+  return {
+    cards,
+    flipped: [],
+    matched: [],
+    moves: 0,
+    complete: false,
+  };
+}
+
+/** Reveal a card. Matching pairs are recorded immediately; mismatches stay visible. */
+function flipCard(state, index) {
+  if (
+    !state ||
+    !Number.isInteger(index) ||
+    index < 0 ||
+    index >= state.cards.length ||
+    state.complete ||
+    state.flipped.length >= 2 ||
+    state.flipped.includes(index) ||
+    state.matched.includes(index)
+  ) {
+    return state;
+  }
+
+  const flipped = [...state.flipped, index];
+  if (flipped.length < 2) {
+    return { ...state, flipped };
+  }
+
+  const [first, second] = flipped;
+  const moves = state.moves + 1;
+  if (state.cards[first].pairId !== state.cards[second].pairId) {
+    return { ...state, flipped, moves };
+  }
+
+  const matched = [...state.matched, first, second];
+  return {
+    ...state,
+    flipped: [],
+    matched,
+    moves,
+    complete: matched.length === state.cards.length,
+  };
+}
+
+/** Hide only a pending, non-matching pair. */
+function hideMismatched(state) {
+  if (!state || state.flipped.length !== 2) return state;
+  const [first, second] = state.flipped;
+  if (state.cards[first].pairId === state.cards[second].pairId) return state;
+  return { ...state, flipped: [] };
+}
+
+
+const CARD_META = {
+  satellite: { label: 'Satellite', icon: '🛰️' },
+  planet: { label: 'Planet', icon: '🪐' },
+  cassette: { label: 'Cassette', icon: '📼' },
+  gamepad: { label: 'Game controller', icon: '🎮' },
+  star: { label: 'Star', icon: '🌟' },
+  disk: { label: 'Floppy disk', icon: '💾' },
+  puzzle: { label: 'Puzzle piece', icon: '🧩' },
+  rocket: { label: 'Rocket', icon: '🚀' },
+};
+
+const grid = document.querySelector('#game-grid');
+const movesOutput = document.querySelector('#moves');
+const pairsOutput = document.querySelector('#pairs');
+const progressLabel = document.querySelector('#progress-label');
+const progressBar = document.querySelector('#progress-bar');
+const progressFill = document.querySelector('#progress-fill');
+const status = document.querySelector('#game-status');
+const newGameButton = document.querySelector('#new-game');
+
+let state = createGame();
+let mismatchTimer = null;
+
+function getCardDescription(card, index) {
+  const meta = CARD_META[card.pairId];
+  if (state.matched.includes(index)) return `${meta.label}, matched`;
+  if (state.flipped.includes(index)) return `${meta.label}, revealed`;
+  return `Hidden card ${index + 1}`;
+}
+
+function updateCardElements() {
+  const buttons = grid.querySelectorAll('.memory-card');
+  buttons.forEach((button, index) => {
+    const card = state.cards[index];
+    const isMatched = state.matched.includes(index);
+    const isOpen = isMatched || state.flipped.includes(index);
+    const meta = CARD_META[card.pairId];
+    button.classList.toggle('is-open', isOpen && !isMatched);
+    button.classList.toggle('is-matched', isMatched);
+    button.setAttribute('aria-label', getCardDescription(card, index));
+    button.setAttribute('aria-pressed', String(isOpen));
+    button.setAttribute('aria-disabled', String(isMatched));
+    button.querySelector('.card-mark').textContent = isOpen ? meta.icon : '?';
+  });
+}
+
+function updateStats() {
+  const pairsFound = state.matched.length / 2;
+  const percent = Math.round((pairsFound / DEFAULT_SYMBOLS.length) * 100);
+  movesOutput.textContent = String(state.moves);
+  pairsOutput.textContent = `${pairsFound} / ${DEFAULT_SYMBOLS.length}`;
+  progressLabel.textContent = `${percent}%`;
+  progressBar.setAttribute('aria-valuenow', String(pairsFound));
+  progressFill.style.width = `${percent}%`;
+}
+
+function announce(message) {
+  status.textContent = message;
+}
+
+function buildBoard() {
+  const fragment = document.createDocumentFragment();
+  state.cards.forEach((card, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'memory-card';
+    button.dataset.index = String(index);
+    button.setAttribute('aria-label', `Hidden card ${index + 1}`);
+    button.setAttribute('aria-pressed', 'false');
+    button.setAttribute('aria-disabled', 'false');
+    button.innerHTML = '<span class="card-mark" aria-hidden="true">?</span>';
+    button.addEventListener('click', () => chooseCard(index));
+    fragment.append(button);
+  });
+  grid.replaceChildren(fragment);
+  updateCardElements();
+  updateStats();
+}
+
+function chooseCard(index) {
+  const previous = state;
+  state = flipCard(state, index);
+  if (state === previous) return;
+
+  updateCardElements();
+  updateStats();
+
+  if (state.complete) {
+    announce(`All eight pairs found in ${state.moves} moves. Recovered!`);
+    return;
+  }
+
+  if (state.matched.length > previous.matched.length) {
+    const matchedIndex = state.matched[state.matched.length - 1];
+    const label = CARD_META[state.cards[matchedIndex].pairId].label;
+    announce(`Match found: ${label}. ${state.matched.length / 2} of 8 pairs found.`);
+  } else if (state.flipped.length === 2) {
+    announce('Not a match. Both cards will turn over shortly.');
+    window.clearTimeout(mismatchTimer);
+    mismatchTimer = window.setTimeout(() => {
+      state = hideMismatched(state);
+      updateCardElements();
+      announce('Cards turned back over. Try another pair.');
+    }, 900);
+  } else {
+    const label = CARD_META[state.cards[index].pairId].label;
+    announce(`${label} revealed. Choose one more card.`);
+  }
+}
+
+function startNewGame() {
+  window.clearTimeout(mismatchTimer);
+  state = createGame();
+  buildBoard();
+  announce('New game ready. Find all eight pairs.');
+}
+
+newGameButton.addEventListener('click', () => {
+  startNewGame();
+  newGameButton.focus();
+});
+
+buildBoard();
+
+</script>
+</body>
+</html>
