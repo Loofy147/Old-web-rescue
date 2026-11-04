@@ -6,13 +6,13 @@
 
 ## Checks
 
-- `python -m unittest discover -s tests -v` — **34/34 PASS**.
+- `python -m unittest discover -s tests -v` — **35/35 PASS**.
 - `python -m py_compile rescue_benchmark.py` — **PASS**.
 - `python rescue_benchmark.py validate fixtures/synthetic-benchmark.json` — **PASS**.
 - `python rescue_benchmark.py report fixtures/synthetic-benchmark.json --format json` — **PASS**; output also parsed with `python -m json.tool`.
 - `python rescue_benchmark.py report fixtures/synthetic-benchmark.json` — **PASS**.
 - Exact-environment mismatch control — **PASS**; no comparison emitted when viewport differs.
-- Invalid values control — **PASS**; credentialed/invalid-port URLs, invalid viewport, unsupported enum values, `NaN`, negative duration, broken references, malformed criterion results and inconsistent outcomes are rejected.
+- Invalid values control — **PASS**; credentialed/invalid-port URLs, invalid viewport, unsupported enum values, `NaN`, negative and overflowing duration values, broken references, malformed criterion results and inconsistent outcomes are rejected without crashing.
 - Determinism control — **PASS**; identical input yields identical report data.
 
 ## Synthetic fixture output

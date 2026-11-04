@@ -7,8 +7,8 @@
 - Added baseline/candidate comparisons only for identical scenario IDs and full environment records.
 - Kept completion rates and successful-run duration/step medians scoped to matched task conditions; no pooled site metric or composite score is emitted.
 - Added finding categories, severities, evidence methods and reproducible evidence requirements.
-- Added a wholly synthetic fixture, 34 regression tests, CLI validation and Markdown/JSON reports.
-- Added exact URL, archive-capture, viewport, malformed-value, outcome-consistency and determinism checks.
+- Added a wholly synthetic fixture, 35 regression tests, CLI validation and Markdown/JSON reports.
+- Added exact URL, archive-capture, viewport, malformed-value, outcome-consistency, numeric-overflow and determinism checks.
 - Local verification passed on Python 3.13.5; Python 3.10/3.12 CI results remain pending.
 
 ## Unreleased — Pilot 003 Pixel Atlas

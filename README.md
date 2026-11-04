@@ -70,7 +70,7 @@ python rescue_benchmark.py report fixtures/synthetic-benchmark.json --format jso
 | 001 | 6/6 Node tests; keyboard browser smoke; 320/390/1440 px; zero page errors |
 | 002 | 23/23 Python tests; compilation; fixture audit |
 | 003 | 18/18 Node tests; Playwright smoke: local import, search, keyboard selection, exports, unsafe-link blocking, source-injection resistance; 320/390/1440 px; zero external requests and page errors |
-| 004 | 34/34 Python tests; compile; synthetic fixture validation; JSON and Markdown report checks; invalid-input, outcome-consistency, exact-environment and determinism controls |
+| 004 | 35/35 Python tests; compile; synthetic fixture validation; JSON and Markdown report checks; invalid-input/overflow, outcome-consistency, exact-environment and determinism controls |
 
 Pilot 004 was run locally on Python 3.13.5. The GitHub Actions configuration is set to check Python 3.10 and 3.12; those results remain pending execution for this pull request. Browser smoke scripts remain optional local checks and are not CI gates.
 

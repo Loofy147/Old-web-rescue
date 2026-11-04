@@ -34,12 +34,12 @@ def _is_nonempty_string(value: Any) -> bool:
 
 
 def _is_nonnegative_number(value: Any) -> bool:
-    return (
-        isinstance(value, (int, float))
-        and not isinstance(value, bool)
-        and math.isfinite(float(value))
-        and value >= 0
-    )
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return False
+    try:
+        return math.isfinite(float(value)) and value >= 0
+    except (OverflowError, ValueError):
+        return False
 
 
 def _valid_http_url(value: Any) -> bool:

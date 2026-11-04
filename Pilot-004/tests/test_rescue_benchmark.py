@@ -104,6 +104,10 @@ class BenchmarkValidationTests(unittest.TestCase):
         self.document["runs"][0]["duration_seconds"] = float("nan")
         self.assertTrue(any("duration_seconds" in error for error in validate_benchmark(self.document)))
 
+    def test_overflowing_duration_is_rejected_without_crashing(self):
+        self.document["runs"][0]["duration_seconds"] = 10 ** 400
+        self.assertTrue(any("duration_seconds" in error for error in validate_benchmark(self.document)))
+
     def test_finding_requires_evidence(self):
         self.document["runs"][0]["findings"][0]["evidence"] = "  "
         self.assertTrue(any("evidence" in error for error in validate_benchmark(self.document)))
