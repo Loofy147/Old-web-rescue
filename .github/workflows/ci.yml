@@ -44,3 +44,20 @@ jobs:
       - name: Validate HTML audit fixture output
         working-directory: Pilot-002
         run: python legacy_html_audit.py fixtures/legacy-image-map-sample.html --json > audit-output.json
+
+  pilot-003:
+    name: Pilot 003 — Pixel Atlas parser tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test Pixel Atlas core
+        working-directory: Pilot-003
+        run: node --test tests/pixel-atlas-core.test.mjs
+      - name: Syntax-check browser modules
+        working-directory: Pilot-003
+        run: |
+          node --check pixel-atlas-core.mjs
+          node --check app.mjs
