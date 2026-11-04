@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="A local-only, searchable image-map inspector from Old Web Rescue Lab.">
+  <title>Pixel Atlas — Old Web Rescue Lab</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to Pixel Atlas workspace</a>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Old Web Rescue Lab home">
+        <span class="brand-mark" aria-hidden="true">OW</span>
+        <span class="brand-copy"><strong>OLD WEB RESCUE LAB</strong><small>ARCHIVE · INSPECT · REBUILD</small></span>
+      </a>
+      <div class="topbar-meta"><span class="status-dot" aria-hidden="true"></span><span>LOCAL INSPECTION</span><span class="divider-dot" aria-hidden="true">/</span><span>PILOT 003</span></div>
+    </header>
+
+    <main id="workspace">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">IMAGE-MAP RECOVERY TOOLKIT <span class="eyebrow-line" aria-hidden="true"></span> 0.1</p>
+          <h1 id="page-title">Every region<br><span>has a story.</span></h1>
+          <p class="lede">Turn legacy image maps into a searchable destination inventory. Keep the original markup, expose missing text alternatives, and separate live targets from archived replacements.</p>
+        </div>
+        <aside class="hero-note" aria-label="Privacy and safety note">
+          <span class="note-icon" aria-hidden="true">⌁</span>
+          <div><strong>Local by design</strong><p>HTML is parsed in this browser. Nothing is uploaded, scripts are never executed, and extracted links are never crawled or opened automatically.</p></div>
+        </aside>
+      </section>
+
+      <section class="import-panel panel" aria-labelledby="import-heading">
+        <div class="section-heading">
+          <div><p class="eyebrow">01 / SOURCE</p><h2 id="import-heading">Bring an image map</h2></div>
+          <span class="section-index">HTML IN · INVENTORY OUT</span>
+        </div>
+        <div class="import-grid">
+          <div class="source-field">
+            <label class="field-label" for="source-html">Paste HTML source</label>
+            <textarea id="source-html" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Paste a saved HTML page containing <map> and <area> elements…"></textarea>
+            <div class="source-actions">
+              <label class="file-button" for="source-file"><span aria-hidden="true">↥</span> Choose local HTML</label>
+              <input id="source-file" type="file" accept=".html,.htm,.xhtml,.txt,text/html,application/xhtml+xml,text/plain">
+              <span id="file-name" class="file-name">No file selected</span>
+              <button id="load-sample" class="text-button" type="button">Load synthetic example</button>
+            </div>
+          </div>
+          <div class="source-options">
+            <label class="field-label" for="base-url">Original page URL <span class="optional">OPTIONAL</span></label>
+            <input id="base-url" type="url" inputmode="url" placeholder="https://example.org/gallery/page.html" autocomplete="url">
+            <p class="field-help">Used only to resolve relative links. No request is made to this address.</p>
+            <div class="source-facts">
+              <div><span class="fact-value">5 MB</span><span class="fact-label">MAX SOURCE SIZE</span></div>
+              <div><span class="fact-value">0</span><span class="fact-label">NETWORK REQUESTS</span></div>
+            </div>
+            <button id="analyze-button" class="primary-button" type="button"><span>Analyze image map</span><span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <p id="import-status" class="status-line" role="status" aria-live="polite">Choose a local file, paste source HTML, or load the synthetic example.</p>
+      </section>
+
+      <section id="results" class="results-section" aria-labelledby="results-heading" hidden>
+        <div class="results-heading">
+          <div><p class="eyebrow">02 / INSPECTION</p><h2 id="results-heading">Map inventory</h2><p id="results-subtitle" class="results-subtitle">Extracted regions and destination provenance.</p></div>
+          <div class="export-actions">
+            <button id="export-csv" class="secondary-button" type="button" disabled>Export CSV</button>
+            <button id="export-json" class="secondary-button" type="button" disabled>Export JSON</button>
+          </div>
+        </div>
+
+        <div id="summary-grid" class="summary-grid" aria-label="Image map inspection summary">
+          <article class="summary-card"><span class="summary-number" id="metric-total">0</span><span class="summary-label">REGIONS FOUND</span></article>
+          <article class="summary-card"><span class="summary-number" id="metric-verified">0</span><span class="summary-label">SOURCE LABELS</span></article>
+          <article class="summary-card attention"><span class="summary-number" id="metric-review">0</span><span class="summary-label">NEED REVIEW</span></article>
+          <article class="summary-card archived"><span class="summary-number" id="metric-archive">0</span><span class="summary-label">ARCHIVE ROUTES</span></article>
+        </div>
+
+        <div class="workspace-grid">
+          <section class="visual-panel panel" aria-labelledby="visual-heading">
+            <div class="section-heading compact-heading"><div><p class="eyebrow">GEOMETRY VIEW</p><h3 id="visual-heading">Region coordinates</h3></div><span id="map-dimension" class="dimension-label">NO MAP LOADED</span></div>
+            <div id="geometry-board" class="geometry-board">
+              <div class="board-empty"><span aria-hidden="true">⌗</span><strong>No geometry to display</strong><p>Run an inspection to plot the image-map regions.</p></div>
+            </div>
+            <div class="legend"><span><i class="legend-swatch region-swatch"></i> Region</span><span><i class="legend-swatch selected-swatch"></i> Selected</span><span><i class="legend-swatch invalid-swatch"></i> Geometry issue</span></div>
+            <p id="geometry-note" class="geometry-note">This coordinate view is a schematic, not a screenshot of the original page.</p>
+          </section>
+
+          <section class="inventory-panel panel" aria-labelledby="inventory-heading">
+            <div class="inventory-head"><div><p class="eyebrow">DESTINATION INDEX</p><h3 id="inventory-heading">Regions <span id="region-count" class="count-pill">0</span></h3></div><label class="search-box" for="region-search"><span aria-hidden="true">⌕</span><input id="region-search" type="search" aria-label="Search regions by label, URL, shape or warning" placeholder="Search label, URL, shape…" autocomplete="off"><kbd>/</kbd></label></div>
+            <p id="filter-status" class="filter-status" aria-live="polite">No regions loaded.</p>
+            <div id="region-list" class="region-list" aria-label="Searchable image-map regions"></div>
+            <div id="empty-results" class="empty-results" hidden><strong>No matching regions</strong><p>Try a different label, destination, or warning term.</p></div>
+          </section>
+        </div>
+        <details class="provenance-panel panel" open>
+          <summary><span><span class="eyebrow">03 / PROVENANCE</span><strong>Source and quality notes</strong></span><span class="summary-chevron" aria-hidden="true">⌄</span></summary>
+          <div id="provenance-details" class="provenance-details"></div>
+        </details>
+      </section>
+
+      <section id="empty-state" class="empty-state" aria-labelledby="empty-heading">
+        <div class="empty-graphic" aria-hidden="true"><span class="graphic-frame"></span><span class="graphic-node node-a"></span><span class="graphic-node node-b"></span><span class="graphic-node node-c"></span><span class="graphic-cross">+</span></div>
+        <div><p class="eyebrow">READY FOR INSPECTION</p><h2 id="empty-heading">A map is more than its image.</h2><p>Each hotspot has a destination, geometry, and sometimes a missing description. Pixel Atlas brings those pieces into one place without changing the original source.</p></div>
+      </section>
+    </main>
+
+    <footer class="footer"><span>OLD WEB RESCUE LAB <span aria-hidden="true">/</span> PILOT 003</span><span>Local parsing only · Independent research tool · No affiliation with archived sites</span></footer>
+  </div>
+  <noscript><p class="noscript">Pixel Atlas requires JavaScript to parse local HTML in your browser.</p></noscript>
+</body>
+</html>
